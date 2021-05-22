@@ -29,3 +29,23 @@ class ShoppingCart(View):
         }
         return JsonResponse(data, status=201)
 
+    def get(self, request):
+        items_count = CartItem.objects.count()
+        items = CartItem.objects.all()
+
+        items_data = []
+        for item in items:
+            items_data.append(
+                {
+                    'product_name': item.product_name,
+                    'product_price': item.product_price,
+                    'product_quantity': item.product_quantity
+                }
+            )
+        data = {
+            'items': items_data,
+            'count': items_count
+        }
+
+        return JsonResponse(data, status=200)
+
