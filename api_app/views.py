@@ -46,6 +46,19 @@ class ShoppingCart(View):
             'items': items_data,
             'count': items_count
         }
-
         return JsonResponse(data, status=200)
 
+
+@method_decorator(csrf_exempt, name='dispatch')
+class ShoppingCartUpdate(View):
+    def patch(self, request, item_id):
+        data = json.loads(request.body.decode("utf-8"))
+        item = CartItem.objects.get(id=item_id)
+        item.product_quantity = data['product_quantity']
+        item.save()
+
+        data = {
+            'message': f"Item {item_id} has been updated"
+        }
+
+        return JsonResponse(data)
