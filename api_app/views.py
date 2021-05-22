@@ -64,7 +64,7 @@ class ShoppingCartUpdate(View):
         return JsonResponse(data)
 
     def delete(self, request, item_id):
-        data = json.loads(request.body.decode("utf-8"))
+        # data = json.loads(request.body.decode("utf-8"))
         item = CartItem.objects.get(id=item_id)
         item.delete()
 
